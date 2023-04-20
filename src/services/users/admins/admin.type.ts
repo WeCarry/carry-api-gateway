@@ -1,8 +1,6 @@
-export type Admin = {
-	id: string;
-	fullName: string;
-	email: string;
-	password: string;
+import { User } from '../../utils/types/user.type';
+
+export type Admin = User & {
 	phone: string;
 	role: string;
 };

@@ -1,19 +1,16 @@
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
+import passengerRoutes from './passengers/passenger.routes';
+import mechantRoutes from './merchants/merchant.routes';
+import adminRoutes from './admins/admin.routes';
+import customerSupportRoutes from './customer-support/customer-support.routes';
+import driverRoutes from './drivers/driver.routes';
 
 const router = Router();
 
-router.get('/', async (req: Request, res: Response) => {
-	try {
-		console.log('Hello world');
-
-		res.send('User list');
-	} catch (error) {}
-});
-
-router.get('/:id', async (req: Request, res: Response) => {
-	try {
-		res.send(`User with id: ${req.params.id}`);
-	} catch (error) {}
-});
+router.use('/passengers', passengerRoutes);
+router.use('/merchants', mechantRoutes);
+router.use('/admins', adminRoutes);
+router.use('/curstomer-support', customerSupportRoutes);
+router.use('/drivers', driverRoutes);
 
 export default router;

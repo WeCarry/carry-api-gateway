@@ -1,7 +1,5 @@
-export type CustomerSupport = {
-	id: string;
-	fullName: string;
-	email: string;
-	password: string;
+import { User } from '../../utils/types/user.type';
+
+export type CustomerSupport = User & {
 	phone: string;
 };

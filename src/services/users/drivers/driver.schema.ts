@@ -2,7 +2,8 @@ export const driverSchema = {
 	type: 'object',
 	properties: {
 		id: { type: 'string' },
-		fullName: { type: 'string' },
+		firstName: { type: 'string', minLength: 1, maxLength: 20 },
+		lastName: { type: 'string', minLength: 1, maxLength: 20 },
 		email: { type: 'string', format: 'email' },
 		password: { type: 'string', minLength: 6 },
 		phone: { type: 'string', minLength: 10, maxLength: 15 },
@@ -16,6 +17,7 @@ export const driverSchema = {
 		rideHistory: { type: 'array', items: { type: 'object' } },
 		deliveryHistory: { type: 'array', items: { type: 'object' } },
 		rating: { type: 'number', minimum: 0, maximum: 5 },
+		status: {type: 'boolean'}
 	},
 	required: [
 		'fullName',

@@ -1,9 +1,7 @@
-// User type
-export type User = {
-	id: string;
-	username: string;
-	email: string;
-	password: string;
+import { User } from '../../utils/types/user.type';
+
+// Passenger type
+export type Passenger = User & {
 	phone: string;
 	profilePicture?: string;
 	paymentMethod?: string;
@@ -11,3 +9,5 @@ export type User = {
 	rideHistory?: Array<any>;
 	deliveryHistory?: Array<any>;
 };
+
+export { User };

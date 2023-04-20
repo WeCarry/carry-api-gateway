@@ -1,8 +1,6 @@
-export type Driver = {
-	id: string;
-	fullName: string;
-	email: string;
-	password: string;
+import { User } from '../../utils/types/user.type';
+
+export type Driver = User & {
 	phone: string;
 	profilePicture: string;
 	vehicleType: string;
@@ -14,4 +12,6 @@ export type Driver = {
 	rideHistory: any[];
 	deliveryHistory: any[];
 	rating: number;
+	status: boolean;
+	dob: Date;
 };

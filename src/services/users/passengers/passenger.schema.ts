@@ -1,9 +1,11 @@
 // User schema
-export const userSchema = {
+export const passengerSchema = {
 	type: 'object',
 	properties: {
 		id: { type: 'string', format: 'uuid' },
 		username: { type: 'string', minLength: 3, maxLength: 20 },
+		firstName: { type: 'string', minLength: 1, maxLength: 20 },
+		lastName: { type: 'string', minLength: 1, maxLength: 20 },
 		email: { type: 'string', format: 'email' },
 		password: { type: 'string', minLength: 8 },
 		phone: { type: 'string', minLength: 10, maxLength: 15 },
@@ -22,5 +24,5 @@ export const userSchema = {
 			items: { type: 'object' },
 		},
 	},
-	required: ['id', 'username', 'email', 'password', 'phone'],
+	required: ['id', 'firstName', 'lastName', 'email', 'password'],
 };

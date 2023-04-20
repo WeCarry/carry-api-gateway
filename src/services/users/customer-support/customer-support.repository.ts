@@ -2,7 +2,7 @@ import { BaseRepository, MongoDBAdapter } from "carry-db-driver";
 import { customerSupportSchema } from "./customer-support.schema";
 import { CustomerSupport } from "./customer-support.type";
 
-class CustomerSupportRepository extends BaseRepository<CustomerSupport> {
+export class CustomerSupportRepository extends BaseRepository<CustomerSupport> {
 	constructor(adapter: MongoDBAdapter) {
 		super({
 			adapter,
