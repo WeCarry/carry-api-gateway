@@ -33,7 +33,6 @@ class MongooseService {
 				mongoose
 					.connect(uri, this.mongooseOptions)
 					.then(() => {
-						console.log('Connected to MongoDB :)');
 						log('MongoDB is connected');
 						resolve('MongoDB is connected');
 					})
