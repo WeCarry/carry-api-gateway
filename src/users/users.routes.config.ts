@@ -2,6 +2,8 @@ import { CommonRoutesConfig } from '../common/common.routes.config';
 import UsersController from './controllers/user.controller';
 import UsersMiddleware from './middleware/users.middleware';
 import express from 'express';
+import { validate } from '../common/middleware/validate.middleware';
+import { createUserSchema } from './schemas/user.schema';
 
 export class UsersRoutes extends CommonRoutesConfig {
 	constructor(app: express.Application) {
@@ -13,6 +15,7 @@ export class UsersRoutes extends CommonRoutesConfig {
 			.route(`/users`)
 			.get(UsersController.listUsers)
 			.post(
+				validate(createUserSchema),
 				UsersMiddleware.validateRequiredUserBodyFields,
 				UsersMiddleware.validateSameEmailDoesntExist,
 				UsersController.createUser
