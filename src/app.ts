@@ -65,6 +65,10 @@ const startServer = async () => {
 			// always want to know when the server is done starting up
 			console.log(runningMessage);
 		});
+		process.on('SIGINT', async () => {
+			await mongooseService.disconnect();
+			process.exit(0);
+		});
 	} catch (error) {
 		console.error('Error starting the server:', error);
 		process.exit(1);
@@ -72,7 +76,3 @@ const startServer = async () => {
 };
 
 startServer();
-process.on('SIGINT', async () => {
-	await mongooseService.disconnect();
-	process.exit(0);
-});

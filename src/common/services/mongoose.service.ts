@@ -10,7 +10,6 @@ class MongooseService {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		serverSelectionTimeoutMS: 5000,
-		// useFindAndModify: false,
 	};
 
 	constructor() {
@@ -59,7 +58,7 @@ class MongooseService {
 	async disconnect() {
 		try {
 			await this.getMongoose().disconnect();
-			log('MongoDB disconnected');
+			log('MongoDB disconnected :(');
 		} catch (err) {
 			log('Error disconnecting MongoDB:', err);
 		}
