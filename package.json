@@ -10,8 +10,9 @@
 	},
 	"scripts": {
 		"build": "tsc",
-		"deploy": "serverless deploy",
-		"remove": "serverless remove",
+		"deploy:dev": "npm run deploy -- dev",
+		"deploy:staging": "npm run deploy -- staging",
+		"deploy:prod": "npm run deploy -- prod",
 		"start:dev": "nodemon",
 		"debug": "export DEBUG=* && npm run start:dev",
 		"start": "tsc && node --unhandled-rejections=strict ./dist/app.js",
