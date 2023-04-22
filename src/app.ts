@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import * as http from 'http';
+import { Server, Socket } from 'socket.io';
 
 import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
@@ -19,6 +20,7 @@ const startServer = async () => {
 
 		const app: Application = express();
 		const server: http.Server = http.createServer(app);
+		const io = new Server(server);
 		const port = 3000;
 		const routes: Array<CommonRoutesConfig> = [];
 		const debugLog: debug.IDebugger = debug('app');
@@ -56,7 +58,8 @@ const startServer = async () => {
 		app.get('/', (req: express.Request, res: express.Response) => {
 			res.status(200).send(runningMessage);
 		});
-
+		// Initialize Socket.io connection handling
+		// io.on('connection', handleSocketConnection);
 		server.listen(port, () => {
 			routes.forEach((route: CommonRoutesConfig) => {
 				debugLog(`Routes configured for ${route.getName()}`);
@@ -73,6 +76,20 @@ const startServer = async () => {
 		console.error('Error starting the server:', error);
 		process.exit(1);
 	}
+};
+
+const handleSocketConnection = (socket: Socket) => {
+	console.log('Client connected:', socket.id);
+
+	// Listen for custom events from the client
+	socket.on('some-event', (data) => {
+		console.log('Received some-event:', data);
+	});
+
+	// Handle client disconnection
+	socket.on('disconnect', () => {
+		console.log('Client disconnected:', socket.id);
+	});
 };
 
 startServer();
