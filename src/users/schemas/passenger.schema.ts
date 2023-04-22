@@ -1,16 +1,13 @@
 import { Document, Schema, model } from 'mongoose';
 
-export interface Passenger extends Document {
+export type Passenger = {
 	phoneNumber: string;
 	rides: Schema.Types.ObjectId[];
 	rating: number;
-}
+};
 
 export const passengerSchema = new Schema<Passenger>({
-	phoneNumber: {
-		type: String,
-		required: true,
-	},
+	phoneNumber: String,
 	rides: [
 		{
 			type: Schema.Types.ObjectId,

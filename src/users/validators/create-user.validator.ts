@@ -3,11 +3,12 @@ import Joi from 'joi';
 import { UserTypes } from '../enums/user-types.enum';
 
 export const createUserValidator = Joi.object({
-	name: Joi.string().required(),
 	email: Joi.string().email().required(),
 	password: Joi.string()
 		.min(8)
-		.pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+		.pattern(
+			new RegExp('^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$')
+		)
 		.required(),
 	firstName: Joi.string().required(),
 	lastName: Joi.string().required(),

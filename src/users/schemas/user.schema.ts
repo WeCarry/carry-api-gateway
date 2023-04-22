@@ -1,17 +1,18 @@
 import { model, Schema, Types } from 'mongoose';
 import { UserTypes } from '../enums/user-types.enum';
-import { driverSchema } from './driver.schema';
-import { passengerSchema } from './passenger.schema';
-import { merchantSchema } from './merchant.schema';
-export interface User extends Document {
+import { Driver, driverSchema } from './driver.schema';
+import { Passenger, passengerSchema } from './passenger.schema';
+import { Merchant, merchantSchema } from './merchant.schema';
+export type User = ({
 	_id: Types.ObjectId;
 	email: string;
 	password: string;
 	firstName: string;
 	lastName: string;
 	userType: UserTypes;
-	permissionFlag: number;
-}
+	permissionFlag?: number;
+} & Document) &
+	(Driver | Passenger | Merchant);
 
 const userSchema = new Schema<User>(
 	{

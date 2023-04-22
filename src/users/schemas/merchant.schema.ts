@@ -1,24 +1,21 @@
 import { Document, Schema } from 'mongoose';
 
-export interface Address {
+export type Address = {
 	street: string;
 	city: string;
 	region: string;
 	zip: string;
 	country: string;
-}
-export interface Merchant extends Document {
+};
+export type Merchant = {
 	name: string;
 	address: Address;
 	phoneNumber: string;
 	rating: number;
-}
+};
 
 export const merchantSchema = new Schema<Merchant>({
-	name: {
-		type: String,
-		required: true,
-	},
+	name: String,
 	address: {
 		street: String,
 		city: String,
@@ -26,9 +23,6 @@ export const merchantSchema = new Schema<Merchant>({
 		zip: String,
 		country: String,
 	},
-	phoneNumber: {
-		type: String,
-		required: true,
-	},
+	phoneNumber: String,
 	rating: Number,
 });

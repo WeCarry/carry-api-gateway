@@ -7,7 +7,7 @@ export enum DriverStatuses {
 	Inactive = 'INACTIVE',
 }
 
-export interface Driver extends Document {
+export type Driver = {
 	licenseNumber: string;
 	vehicle: {
 		make: string;
@@ -27,7 +27,7 @@ export interface Driver extends Document {
 	status: DriverStatuses;
 	rating: number;
 	age: number;
-}
+};
 
 export const driverSchema = new Schema<Driver>({
 	licenseNumber: String,
