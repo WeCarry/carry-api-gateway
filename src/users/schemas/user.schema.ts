@@ -10,6 +10,7 @@ export interface User extends Document {
 	firstName: string;
 	lastName: string;
 	userType: UserTypes;
+	permissionFlag: number;
 }
 
 const userSchema = new Schema<User>(
@@ -18,6 +19,7 @@ const userSchema = new Schema<User>(
 		password: String,
 		firstName: String,
 		lastName: String,
+		permissionFlag: Number,
 		userType: {
 			type: String,
 			enum: UserTypes,

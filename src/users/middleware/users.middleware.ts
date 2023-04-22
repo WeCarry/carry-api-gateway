@@ -1,7 +1,8 @@
 import express from 'express';
 import userService from '../services/users.service';
 import debug from 'debug';
-import { createUserValidator } from '../validators/user.validator';
+import { createUserValidator } from '../validators/create-user.validator';
+import { toRes } from '../../common/config/response.config';
 
 const log: debug.IDebugger = debug('app:users-controller');
 class UsersMiddleware {
@@ -44,7 +45,9 @@ class UsersMiddleware {
 		if (user && user._id.toString() === req.params.userId) {
 			next();
 		} else {
-			res.status(400).send({ error: `Invalid email` });
+			res.status(400).send(
+				toRes(400, 'Email is not acceptable', {}, 'Invalid email')
+			);
 		}
 	}
 

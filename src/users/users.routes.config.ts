@@ -2,8 +2,7 @@ import { CommonRoutesConfig } from '../common/common.routes.config';
 import UsersController from './controllers/user.controller';
 import UsersMiddleware from './middleware/users.middleware';
 import express from 'express';
-import { validate } from '../common/middleware/validate.middleware';
-import { createUserValidator } from './validators/user.validator';
+import { createUserValidator } from './validators/create-user.validator';
 import BodyValidationMiddleware from '../common/middleware/body.validation.middleware';
 
 export class UsersRoutes extends CommonRoutesConfig {
