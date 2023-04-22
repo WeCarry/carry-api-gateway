@@ -3,6 +3,7 @@ import { CRUD } from '../../common/interfaces/crud.interface';
 import { CreateUserDto } from '../dto/create.user.dto';
 import { PutUserDto } from '../dto/put.user.dto';
 import { PatchUserDto } from '../dto/patch.user.dto';
+import { User } from '../schemas/user.schema';
 
 class UsersService implements CRUD<any> {
 	async create(resource: CreateUserDto) {
@@ -33,7 +34,7 @@ class UsersService implements CRUD<any> {
 		return UsersDao.getUserByEmail(email);
 	}
 
-	async getUserByEmailWithPassword(email: string) {
+	async getUserByEmailWithPassword(email: string): Promise<User | null> {
 		return UsersDao.getUserByEmailWithPassword(email);
 	}
 }

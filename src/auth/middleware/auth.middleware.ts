@@ -1,13 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import usersService from '../../users/services/users.service';
 import { Encryption } from '../../common/config/encrypt.config';
-import { User } from '../../users/schemas/user.schema';
+import { toRes } from '../../common/config/response.config';
 
 class AuthMiddleware {
-	private static JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-
 	async verifyUserPassword(req: Request, res: Response, next: NextFunction) {
-		const user: User = await usersService.getUserByEmailWithPassword(
+		const user = await usersService.getUserByEmailWithPassword(
 			req.body.email
 		);
 		console.log(user);
@@ -34,7 +32,11 @@ class AuthMiddleware {
 		}
 		// Giving the same message in both cases
 		// helps protect against cracking attempts:
-		res.status(400).send({ errors: ['Invalid email and/or password'] });
+		res.status(400).send(
+			toRes(400, 'Something went wrong', undefined, {
+				errors: ['Invalid email and/or password'],
+			})
+		);
 	}
 }
 
