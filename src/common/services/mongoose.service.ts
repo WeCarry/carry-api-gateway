@@ -33,11 +33,19 @@ class MongooseService {
 				mongoose
 					.connect(uri, this.mongooseOptions)
 					.then(() => {
+						console.log('MongoDB is connected');
 						log('MongoDB is connected');
 						resolve('MongoDB is connected');
 					})
 					.catch((err) => {
 						const retrySeconds = 5;
+
+						console.log(
+							`MongoDB connection unsuccessful (will retry #${++this
+								.count} after ${retrySeconds} seconds):`,
+							err
+						);
+
 						log(
 							`MongoDB connection unsuccessful (will retry #${++this
 								.count} after ${retrySeconds} seconds):`,
