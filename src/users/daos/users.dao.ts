@@ -30,22 +30,15 @@ export class UsersDao {
 		}
 	}
 
-	public async getUserByEmail(
-		email: string
-	): Promise<(User & Document) | null> {
-		return this.User.findOne({ email: email }).exec();
+	public async getUserByEmail(email: string): Promise<any> {
+		return await this.User.findOne({ email: email }).exec();
 	}
 
-	public async getUserById(
-		userId: string
-	): Promise<(User & Document) | null> {
+	public async getUserById(userId: string): Promise<any> {
 		return this.User.findOne({ _id: userId }).populate('User').exec();
 	}
 
-	public async getUsers(
-		limit = 25,
-		page = 0
-	): Promise<Array<User & Document>> {
+	public async getUsers(limit = 25, page = 0): Promise<Array<any>> {
 		return this.User.find()
 			.limit(limit)
 			.skip(limit * page)
@@ -55,7 +48,7 @@ export class UsersDao {
 	public async updateUserById(
 		userId: string,
 		userFields: PatchUserDto | PutUserDto
-	): Promise<(User & Document) | null> {
+	): Promise<any> {
 		const existingUser = await this.User.findOneAndUpdate(
 			{ _id: new Types.ObjectId(userId) },
 			{ $set: userFields },
@@ -71,9 +64,9 @@ export class UsersDao {
 		return this.User.deleteOne({ _id: userId }).exec();
 	}
 
-	async getUserByEmailWithPassword(email: string) {
-		return this.User.findOne({ email: email })
-			.select('_id email userType +password')
+	async getUserByEmailWithPassword(email: string): Promise<User | null> {
+		return await this.User.findOne({ email: email })
+			.select(['_id', 'password', 'userType', 'permissionFlag'])
 			.exec();
 	}
 }

@@ -3,16 +3,20 @@ import { UserTypes } from '../enums/user-types.enum';
 import { Driver, driverSchema } from './driver.schema';
 import { Passenger, passengerSchema } from './passenger.schema';
 import { Merchant, merchantSchema } from './merchant.schema';
-export type User = ({
+
+export type User = {
 	_id: Types.ObjectId;
 	email: string;
 	password: string;
 	firstName: string;
 	lastName: string;
 	userType: UserTypes;
+	verified: boolean;
+	otp: number;
+	deletedAt: Date;
 	permissionFlag?: number;
-} & Document) &
-	(Driver | Passenger | Merchant);
+	additionalInfo: Driver | Passenger | Merchant | undefined;
+} & Document;
 
 const userSchema = new Schema<User>(
 	{

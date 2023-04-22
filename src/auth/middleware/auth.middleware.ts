@@ -10,6 +10,8 @@ class AuthMiddleware {
 		const user: User = await usersService.getUserByEmailWithPassword(
 			req.body.email
 		);
+		console.log(user);
+
 		if (user) {
 			const passwordHash = user.password;
 			if (!passwordHash) {
@@ -25,7 +27,7 @@ class AuthMiddleware {
 				req.body = {
 					userId: user._id,
 					email: user.email,
-					permissionFlags: user.permissionFlags,
+					permissionFlags: user.permissionFlag,
 				};
 				return next();
 			}

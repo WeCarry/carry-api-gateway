@@ -8,57 +8,61 @@ export enum DriverStatuses {
 }
 
 export type Driver = {
-	licenseNumber: string;
-	vehicle: {
-		make: string;
-		model: string;
-		year: number;
-		photos: string[];
-		registration: {
-			plateNumber: string;
-			expirationDate: Date;
-		};
-		insurance: {
-			policyNumber: string;
-			expirationDate: Date;
-		};
+	additionalInfo: {
+		licenseNumber: string;
+		vehicle: {
+			make: string;
+			model: string;
+			year: number;
+			photos: string[];
+			registration: {
+				plateNumber: string;
+				expirationDate: Date;
+			};
+			insurance: {
+				policyNumber: string;
+				expirationDate: Date;
+			};
+		}[];
+		rides: Schema.Types.ObjectId[] | Ride[];
+		status: DriverStatuses;
+		rating: number;
+		age: number;
 	};
-	rides: Schema.Types.ObjectId[] | Ride[];
-	status: DriverStatuses;
-	rating: number;
-	age: number;
 };
 
 export const driverSchema = new Schema<Driver>({
-	licenseNumber: String,
-	vehicle: {
-		make: String,
-		model: String,
-		year: Number,
-		photos: [
+	additionalInfo: {
+		licenseNumber: String,
+		vehicle: [{
+			make: String,
+			model: String,
+			year: Number,
+			photos: [
+				{
+					type: String,
+				},
+			],
+			registration: {
+				plateNumber: String,
+				expirationDate: Date,
+			},
+			insurance: {
+				policyNumber: String,
+				expirationDate: Date,
+			},
+		}],
+		rides: [
 			{
-				type: String,
+				type: Schema.Types.ObjectId,
+				ref: 'Ride',
 			},
 		],
-		registration: {
-			plateNumber: String,
-			expirationDate: Date,
+		rating: Number,
+		status: {
+			type: String,
+			enum: DriverStatuses,
 		},
-		insurance: {
-			policyNumber: String,
-			expirationDate: Date,
-		},
+		age: Number,
 	},
-	rides: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: 'Ride',
-		},
-	],
-	rating: Number,
-	status: {
-		type: String,
-		enum: DriverStatuses,
-	},
-	age: Number,
 });

@@ -6,23 +6,31 @@ export type Address = {
 	region: string;
 	zip: string;
 	country: string;
+	coords: {
+		lat: number;
+		long: number;
+	};
 };
 export type Merchant = {
-	name: string;
-	address: Address;
-	phoneNumber: string;
-	rating: number;
+	additionalInfo: {
+		name: string;
+		address: Address;
+		phoneNumber: string;
+		rating: number;
+	};
 };
 
 export const merchantSchema = new Schema<Merchant>({
-	name: String,
-	address: {
-		street: String,
-		city: String,
-		region: String,
-		zip: String,
-		country: String,
+	additionalInfo: {
+		name: String,
+		address: {
+			street: String,
+			city: String,
+			region: String,
+			zip: String,
+			country: String,
+		},
+		phoneNumber: String,
+		rating: Number,
 	},
-	phoneNumber: String,
-	rating: Number,
 });
