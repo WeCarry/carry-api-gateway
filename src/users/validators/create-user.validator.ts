@@ -15,4 +15,5 @@ export const createUserValidator = Joi.object({
 	userType: Joi.string()
 		.valid(UserTypes.Passenger, UserTypes.Driver, UserTypes.Merchant)
 		.required(),
+	additionalInfo: Joi.object(),
 });
