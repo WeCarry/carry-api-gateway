@@ -10,6 +10,7 @@ class UsersMiddleware {
 		next: express.NextFunction
 	) {
 		
+		
 		if (req.body && req.body.email && req.body.password) {
 			next();
 		} else {

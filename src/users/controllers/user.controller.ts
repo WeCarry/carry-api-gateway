@@ -21,8 +21,6 @@ class UsersController {
 	}
 
 	async createUser(req: express.Request, res: express.Response) {
-		console.log('reqs::::????>>>>>', req);
-
 		req.body.password = await Encryption.hashPassword(req.body.password);
 		const userId = await usersService.create(req.body);
 		res.status(201).send({ id: userId });

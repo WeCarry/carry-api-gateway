@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import debug from 'debug';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -61,6 +61,10 @@ class MongooseService {
 		} catch (err) {
 			log('Error disconnecting MongoDB:', err);
 		}
+	}
+
+	public toObjectId(id: string): Types.ObjectId {
+		return new Types.ObjectId(id);
 	}
 }
 export default new MongooseService();

@@ -1,65 +1,63 @@
-import { CreateUserDto } from '../dto/create.user.dto';
 import { PatchUserDto } from '../dto/patch.user.dto';
 import { PutUserDto } from '../dto/put.user.dto';
-import shortid from 'shortid';
+import { Types } from 'mongoose';
 import debug from 'debug';
-import mongooseService from '../../common/services/mongoose.service';
-import mongoose, { isValidObjectId } from 'mongoose';
+import { CreateUserDto } from '../dto/create.user.dto';
+import UserModel, { User } from '../schemas/user.schema';
+import { Model } from 'mongoose';
 
 const log: debug.IDebugger = debug('app:in-memory-dao');
 
-class UsersDao {
-	Schema = mongooseService.getMongoose().Schema;
+export class UsersDao {
+	private User: Model<User & Document>;
 
-	userSchema = new this.Schema(
-		{
-			_id: this.Schema.Types.ObjectId,
-			email: String,
-			password: { type: String, select: false },
-			firstName: String,
-			lastName: String,
-			permissionFlags: Number,
-		},
-		{ id: false }
-	);
-
-	User = mongooseService.getMongoose().model('Users', this.userSchema);
 	constructor() {
 		log('Created new instance of UsersDao');
+		this.User = UserModel;
 	}
 
-	async addUser(userFields: CreateUserDto) {
-		// const userId = shortid.generate();
-		const user = new this.User({
-			_id: new (mongooseService.getMongoose()).Types.ObjectId(),
-			...userFields,
-			permissionFlags: 1,
-		});
-		const result = await user.save();
-		return result._id;
+	public async addUser(
+		userFields: CreateUserDto
+	): Promise<Types.ObjectId | undefined> {
+		try {
+			const user = new this.User({
+				...userFields,
+			});
+			const result = await user.save();
+			return result._id;
+		} catch (error) {
+			throw error;
+		}
 	}
 
-	async getUserByEmail(email: string) {
+	public async getUserByEmail(
+		email: string
+	): Promise<(User & Document) | null> {
 		return this.User.findOne({ email: email }).exec();
 	}
 
-	async getUserById(userId: string) {
+	public async getUserById(
+		userId: string
+	): Promise<(User & Document) | null> {
 		return this.User.findOne({ _id: userId }).populate('User').exec();
 	}
 
-	async getUsers(limit = 25, page = 0) {
+	public async getUsers(
+		limit = 25,
+		page = 0
+	): Promise<Array<User & Document>> {
 		return this.User.find()
 			.limit(limit)
 			.skip(limit * page)
 			.exec();
 	}
 
-	async updateUserById(
+	public async updateUserById(
 		userId: string,
 		userFields: PatchUserDto | PutUserDto
-	) {
+	): Promise<(User & Document) | null> {
 		const existingUser = await this.User.findOneAndUpdate(
-			{ _id: new (mongooseService.getMongoose()).Types.ObjectId(userId) },
+			{ _id: new Types.ObjectId(userId) },
 			{ $set: userFields },
 			{ new: true }
 		).exec();
@@ -67,7 +65,9 @@ class UsersDao {
 		return existingUser;
 	}
 
-	async removeUserById(userId: string) {
+	public async removeUserById(
+		userId: string
+	): Promise<{ ok?: number; n?: number } & { deletedCount?: number }> {
 		return this.User.deleteOne({ _id: userId }).exec();
 	}
 }
