@@ -1,5 +1,6 @@
 import { Schema } from 'mongoose';
 import { Ride } from '../../rides/schemas/ride.schema';
+import { Delivery } from '../../deliveries/schemas/delivery.schema';
 
 export enum DriverStatuses {
 	Active = 'ACTIVE',
@@ -25,6 +26,7 @@ export type Driver = {
 			};
 		}[];
 		rides: Schema.Types.ObjectId[] | Ride[];
+		deliveries: Schema.Types.ObjectId[] | Delivery[];
 		status: DriverStatuses;
 		rating: number;
 		age: number;
@@ -34,28 +36,36 @@ export type Driver = {
 export const driverSchema = new Schema<Driver>({
 	additionalInfo: {
 		licenseNumber: String,
-		vehicle: [{
-			make: String,
-			model: String,
-			year: Number,
-			photos: [
-				{
-					type: String,
+		vehicle: [
+			{
+				make: String,
+				model: String,
+				year: Number,
+				photos: [
+					{
+						type: String,
+					},
+				],
+				registration: {
+					plateNumber: String,
+					expirationDate: Date,
 				},
-			],
-			registration: {
-				plateNumber: String,
-				expirationDate: Date,
+				insurance: {
+					policyNumber: String,
+					expirationDate: Date,
+				},
 			},
-			insurance: {
-				policyNumber: String,
-				expirationDate: Date,
-			},
-		}],
+		],
 		rides: [
 			{
 				type: Schema.Types.ObjectId,
 				ref: 'Ride',
+			},
+		],
+		deliveries: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'Delivery',
 			},
 		],
 		rating: Number,
