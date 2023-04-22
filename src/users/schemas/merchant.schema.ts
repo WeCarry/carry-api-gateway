@@ -1,8 +1,15 @@
-import { Document, Schema, model } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
+export interface Address {
+	street: string;
+	city: string;
+	region: string;
+	zip: string;
+	country: string;
+}
 export interface Merchant extends Document {
 	name: string;
-	address: string;
+	address: Address;
 	phoneNumber: string;
 	rating: number;
 }
@@ -13,8 +20,11 @@ export const merchantSchema = new Schema<Merchant>({
 		required: true,
 	},
 	address: {
-		type: String,
-		required: true,
+		street: String,
+		city: String,
+		region: String,
+		zip: String,
+		country: String,
 	},
 	phoneNumber: {
 		type: String,

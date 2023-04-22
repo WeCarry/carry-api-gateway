@@ -1,5 +1,6 @@
-import { Schema, model } from 'mongoose';
+import { Schema } from 'mongoose';
 import { Ride } from '../../rides/schemas/ride.schema';
+
 export enum DriverStatuses {
 	Active = 'ACTIVE',
 	Busy = 'BUSY',
@@ -25,6 +26,7 @@ export interface Driver extends Document {
 	rides: Schema.Types.ObjectId[] | Ride[];
 	status: DriverStatuses;
 	rating: number;
+	age: number;
 }
 
 export const driverSchema = new Schema<Driver>({
@@ -58,4 +60,5 @@ export const driverSchema = new Schema<Driver>({
 		type: String,
 		enum: DriverStatuses,
 	},
+	age: Number,
 });

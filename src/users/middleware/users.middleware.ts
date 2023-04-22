@@ -1,6 +1,7 @@
 import express from 'express';
 import userService from '../services/users.service';
 import debug from 'debug';
+import { createUserValidator } from '../validators/user.validator';
 
 const log: debug.IDebugger = debug('app:users-controller');
 class UsersMiddleware {
@@ -9,9 +10,10 @@ class UsersMiddleware {
 		res: express.Response,
 		next: express.NextFunction
 	) {
-		
-		
+		const { error, value } = createUserValidator.validate(req.body);
+
 		if (req.body && req.body.email && req.body.password) {
+			log('Validated req', value);
 			next();
 		} else {
 			res.status(400).send({
