@@ -20,11 +20,14 @@ export type User = {
 
 const userSchema = new Schema<User>(
 	{
-		email: String,
-		password: String,
+		email: { type: String, unique: true },
+		password: { type: String, select: false },
 		firstName: String,
 		lastName: String,
 		permissionFlag: Number,
+		deletedAt: { type: Date, select: false },
+		verified: { type: Boolean, default: false },
+		otp: Number,
 		userType: {
 			type: String,
 			enum: UserTypes,
