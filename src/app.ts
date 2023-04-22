@@ -12,6 +12,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 console.log('ENV:', process.env.ENV);
 import mongooseService from './common/services/mongoose.service';
+import { registerRoutes } from './common/config/routes.config';
 
 const startServer = async () => {
 	try {
@@ -51,13 +52,14 @@ const startServer = async () => {
 
 		// here we are adding the UserRoutes to our array,
 		// after sending the Express.js application object to have the routes added to our app!
-		routes.push(new UsersRoutes(app));
+		registerRoutes(routes, app);
 
 		// this is a simple route to make sure everything is working properly
 		const runningMessage = `Server running at http://localhost:${port}`;
 		app.get('/', (req: express.Request, res: express.Response) => {
 			res.status(200).send(runningMessage);
 		});
+
 		// Initialize Socket.io connection handling
 		// io.on('connection', handleSocketConnection);
 		server.listen(port, () => {
