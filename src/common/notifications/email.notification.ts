@@ -3,14 +3,15 @@ import path from 'path';
 import fs from 'fs';
 import handlebars from 'handlebars';
 
+
 // Configure your email account and credentials
 const transporter = nodemailer.createTransport({
 	host: 'smtp-relay.sendinblue.com',
 	port: 587,
 	secure: false, // use TLS
 	auth: {
-		user: 'carry.uzb@gmail.com', // replace with your SMTP Login from Sendinblue
-		pass: 'ns1HtZDEUg4fzVWK', // replace with your SMTP Password from Sendinblue
+		user: process.env.MAILER_EMAIL, // replace with your SMTP Login from Sendinblue
+		pass: process.env.MAILER_PASSWORD, // replace with your SMTP Password from Sendinblue
 	},
 });
 
@@ -22,7 +23,7 @@ export async function sendVerificationEmail(
 		// Read the email template
 		const templatePath = path.resolve(
 			__dirname,
-			'./sign-up-email-template.html'
+			'./signup-email-template.html'
 		);
 		const templateSource = fs.readFileSync(templatePath, 'utf8');
 		// Compile the template with Handlebars
