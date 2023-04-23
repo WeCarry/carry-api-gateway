@@ -7,6 +7,7 @@ import usersService from '../services/users.service';
 // we use debug with a custom context as described in Part 1
 import debug from 'debug';
 import { Encryption } from '../../common/config/encrypt.config';
+import { toRes } from '../../common/config/response.config';
 
 const log: debug.IDebugger = debug('app:users-controller');
 class UsersController {
@@ -17,13 +18,13 @@ class UsersController {
 
 	async getUserById(req: express.Request, res: express.Response) {
 		const user = await usersService.readById(req.body.id);
-		res.status(200).send(user);
+		res.status(200).send(toRes(200, 'Success', user));
 	}
 
 	async createUser(req: express.Request, res: express.Response) {
 		req.body.password = await Encryption.hashPassword(req.body.password);
 		const userId = await usersService.create(req.body);
-		res.status(201).send({ id: userId });
+		res.status(201).send(toRes(201, 'Success', { id: userId }));
 	}
 
 	async patch(req: express.Request, res: express.Response) {
@@ -41,6 +42,8 @@ class UsersController {
 		log(await usersService.putById(req.body.id, req.body));
 		res.status(204).send();
 	}
+
+	async resetPassword(req: express.Request, res: express.Response) {}
 
 	async removeUser(req: express.Request, res: express.Response) {
 		log(await usersService.deleteById(req.body.id));

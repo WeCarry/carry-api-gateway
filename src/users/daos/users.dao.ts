@@ -37,12 +37,15 @@ export class UsersDao {
 		}
 	}
 
-	public async getUserById(userId: string): Promise<User | undefined> {
+	public async getUserById(
+		userId: string,
+		select: Record<string, number>
+	): Promise<User | undefined> {
 		try {
 			return (
 				(await this.User.findOne({ _id: userId })
 					// .populate('User')
-					.select({})
+					.select(select)
 					.exec()) ?? undefined
 			);
 		} catch (error) {

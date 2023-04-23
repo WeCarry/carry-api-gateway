@@ -29,7 +29,7 @@ class UsersService implements CRUD<any> {
 	}
 
 	async readById(id: string): Promise<User | undefined> {
-		return UsersDao.getUserById(id);
+		return UsersDao.getUserById(id, { createdAt: 1, updatedAt: 1 });
 	}
 
 	async putById(id: string, resource: PutUserDto): Promise<User | undefined> {
