@@ -37,7 +37,7 @@ export class Encryption {
 		try {
 			return jwt.verify(token, Encryption.JWT_SECRET);
 		} catch (error) {
-			throw new Error('Invalid token');
+			throw error;
 		}
 	}
 

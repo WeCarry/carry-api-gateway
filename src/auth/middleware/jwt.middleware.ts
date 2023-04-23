@@ -4,6 +4,7 @@ import { Jwt } from '../../common/types/jwt';
 import usersService from '../../users/services/users.service';
 import { User } from '../../users/schemas/user.schema';
 import { Encryption } from '../../common/config/encrypt.config';
+import { toRes } from '../../common/config/response.config';
 
 // @ts-expect-error
 const jwtSecret: string = process.env.JWT_SECRET;
@@ -57,6 +58,7 @@ class JwtMiddleware {
 		next: express.NextFunction
 	) {
 		if (req.headers['authorization']) {
+			console.log('I WAS ABLE TO GET ACCESS TO AUTHORIZATION');
 			try {
 				const authorization = req.headers['authorization'].split(' ');
 				if (authorization[0] !== 'Bearer') {
@@ -68,10 +70,28 @@ class JwtMiddleware {
 					next();
 				}
 			} catch (err) {
-				return res.status(403).send();
+				return res
+					.status(403)
+					.send(
+						toRes(
+							403,
+							'Error occured while validating token',
+							undefined,
+							err
+						)
+					);
 			}
 		} else {
-			return res.status(401).send();
+			return res
+				.status(401)
+				.send(
+					toRes(
+						401,
+						'Error occured while validating token',
+						undefined,
+						'Authorization Bearer Token is not provided.'
+					)
+				);
 		}
 	}
 }

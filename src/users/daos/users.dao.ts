@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 const log: debug.IDebugger = debug('app:in-memory-dao');
 
 export class UsersDao {
-	private User: Model<User & Document>;
+	private User: Model<User>;
 
 	constructor() {
 		log('Created new instance of UsersDao');
@@ -41,7 +41,8 @@ export class UsersDao {
 		try {
 			return (
 				(await this.User.findOne({ _id: userId })
-					.populate('User')
+					// .populate('User')
+					.select({})
 					.exec()) ?? undefined
 			);
 		} catch (error) {
@@ -91,13 +92,13 @@ export class UsersDao {
 		try {
 			return (
 				(await this.User.findOne({ email: email })
-					.select([
-						'_id',
-						'password',
-						'userType',
-						'permissionFlags',
-						'email',
-					])
+					.select({
+						_id: 1,
+						password: 1,
+						userType: 1,
+						permissionFlags: 1,
+						email: 1,
+					})
 					.exec()) ?? undefined
 			);
 		} catch (error) {
