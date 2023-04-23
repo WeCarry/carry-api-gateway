@@ -80,15 +80,29 @@ export class UsersDao {
 	public async removeUserById(
 		userId: string
 	): Promise<{ ok?: number; n?: number } & { deletedCount?: number }> {
-		return this.User.deleteOne({ _id: userId }).exec();
+		try {
+			return await this.User.deleteOne({ _id: userId }).exec();
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	async getUserByEmailWithPassword(email: string): Promise<User | undefined> {
-		return (
-			(await this.User.findOne({ email: email })
-				.select(['_id', 'password', 'userType', 'permissionFlags'])
-				.exec()) ?? undefined
-		);
+		try {
+			return (
+				(await this.User.findOne({ email: email })
+					.select([
+						'_id',
+						'password',
+						'userType',
+						'permissionFlags',
+						'email',
+					])
+					.exec()) ?? undefined
+			);
+		} catch (error) {
+			throw error;
+		}
 	}
 }
 

@@ -19,8 +19,10 @@ class AuthController {
 		try {
 			if (!jwtSecret) log('jwtSercret does not exist');
 			const refreshId = req.body.userId + jwtSecret;
+
 			const { salt, hash } = Encryption.createHashWithSalt(refreshId);
 			req.body.refreshKey = salt.export();
+
 			const token = Encryption.createToken(req.body);
 			return res.status(201).send(
 				toRes(201, 'Token created Successfully', {

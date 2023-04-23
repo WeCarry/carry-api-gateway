@@ -31,7 +31,6 @@ class JwtMiddleware {
 		const user = (await usersService.getUserByEmailWithPassword(
 			res.locals.jwt.email
 		)) as User;
-		console.log(user);
 		const salt = crypto.createSecretKey(
 			Buffer.from(res.locals.jwt.refreshKey.data)
 		);
@@ -63,11 +62,6 @@ class JwtMiddleware {
 				if (authorization[0] !== 'Bearer') {
 					return res.status(401).send();
 				} else {
-					console.log(
-						'ENCRYPTION >> > > > > >',
-						Encryption.verifyToken(authorization[1])
-					);
-
 					res.locals.jwt = Encryption.verifyToken(
 						authorization[1]
 					) as Jwt;

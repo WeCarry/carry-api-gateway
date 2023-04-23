@@ -8,7 +8,6 @@ class AuthMiddleware {
 		const user = await usersService.getUserByEmailWithPassword(
 			req.body.email
 		);
-		console.log(user);
 
 		if (user) {
 			const passwordHash = user.password;
