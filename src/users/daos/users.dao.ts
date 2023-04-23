@@ -86,7 +86,7 @@ export class UsersDao {
 	async getUserByEmailWithPassword(email: string): Promise<User | undefined> {
 		return (
 			(await this.User.findOne({ email: email })
-				.select(['_id', 'password', 'userType', ''])
+				.select(['_id', 'password', 'userType', 'permissionFlags'])
 				.exec()) ?? undefined
 		);
 	}
