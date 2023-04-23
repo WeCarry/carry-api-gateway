@@ -1,6 +1,5 @@
 import {
 	AggregateOptions,
-	Document,
 	FilterQuery,
 	Model,
 	QueryOptions,
@@ -12,7 +11,7 @@ import debug from 'debug';
 
 const log: debug.IDebugger = debug('app:base-dao');
 
-export abstract class BaseDao<T> {
+export class BaseDao<T> {
 	protected model: Model<T>;
 
 	constructor(_model: Model<T>) {
