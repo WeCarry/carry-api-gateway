@@ -15,7 +15,7 @@ export type User = BaseModel & {
 	otp: number;
 	permissionFlags?: number;
 	additionalInfo: Driver | Passenger | Merchant | undefined;
-} & Document;
+};
 
 const userSchema = new Schema<User>(
 	{

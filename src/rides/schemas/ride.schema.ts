@@ -1,6 +1,7 @@
 import { Document, Schema, model } from 'mongoose';
+import { BaseModel } from '../../common/types/base.model.type';
 
-export interface Ride extends Document {
+export type Ride = BaseModel & {
 	driver: Schema.Types.ObjectId;
 	passenger: Schema.Types.ObjectId;
 	pickupLocation: {
@@ -17,7 +18,7 @@ export interface Ride extends Document {
 	distance: number;
 	duration: number;
 	rating: number;
-}
+};
 
 const rideSchema = new Schema<Ride>({
 	driver: {

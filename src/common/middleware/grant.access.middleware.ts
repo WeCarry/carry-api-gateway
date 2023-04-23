@@ -5,6 +5,8 @@ class GrantAccessMiddleware {
 		res: express.Response,
 		next: express.NextFunction
 	) {
+		const method = req.method;
+		const route = req.path;
 		
 	}
 }

@@ -1,5 +1,6 @@
-export type Delivery = {
-	id: number;
+import { BaseModel } from '../../common/types/base.model.type';
+
+export type Delivery = BaseModel & {
 	date: Date;
 	time: string;
 	address: string;

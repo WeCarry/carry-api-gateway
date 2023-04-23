@@ -1,4 +1,4 @@
-import { Schema, Types, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { UserTypes } from '../../users/enums/user-types.enum';
 import { BaseModel } from '../../common/types/base.model.type';
 export enum HTTPMethods {
@@ -13,7 +13,7 @@ export type Route = BaseModel & {
 	route: string[];
 	hasAccess: UserTypes[];
 	method: HTTPMethods;
-} & Document;
+};
 
 const routeSchema = new Schema<Route>(
 	{
