@@ -14,7 +14,7 @@ export type User = {
 	verified: boolean;
 	otp: number;
 	deletedAt: Date;
-	permissionFlag?: number;
+	permissionFlags?: number;
 	additionalInfo: Driver | Passenger | Merchant | undefined;
 } & Document;
 
@@ -24,7 +24,7 @@ const userSchema = new Schema<User>(
 		password: { type: String, select: false },
 		firstName: String,
 		lastName: String,
-		permissionFlag: Number,
+		permissionFlags: Number,
 		deletedAt: { type: Date, select: false },
 		verified: { type: Boolean, default: false },
 		otp: Number,
