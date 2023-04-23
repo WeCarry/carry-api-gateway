@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import * as http from 'http';
+import helmet from 'helmet';
 import { Server, Socket } from 'socket.io';
 
 import * as winston from 'winston';
@@ -19,6 +20,7 @@ const startServer = async () => {
 		await mongooseService.connectWithRetry();
 
 		const app: Application = express();
+		app.use(helmet());
 		const server: http.Server = http.createServer(app);
 		const io = new Server(server);
 		const port = 3000;

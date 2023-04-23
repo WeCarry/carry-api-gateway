@@ -1,15 +1,23 @@
 import { Schema, Types, model } from 'mongoose';
 import { UserTypes } from '../../users/enums/user-types.enum';
-
-export type Route = {
-	_id: Types.ObjectId;
+import { BaseModel } from '../../common/types/base.model.type';
+export enum HTTPMethods {
+	GET = 'GET',
+	POST = 'POST',
+	PUT = 'PUT',
+	PATCH = 'PATCH',
+	DELETE = 'DELETE',
+	ANY = 'ANY',
+}
+export type Route = BaseModel & {
 	route: string[];
 	hasAccess: UserTypes[];
+	method: HTTPMethods;
 } & Document;
 
 const routeSchema = new Schema<Route>(
 	{
-		route: [{ tyep: String, required: true }],
+		route: [{ tyep: String, required: true, unique: true }],
 		hasAccess: [
 			{
 				type: String,
@@ -17,6 +25,12 @@ const routeSchema = new Schema<Route>(
 				required: true,
 			},
 		],
+		method: {
+			type: String,
+			enum: HTTPMethods,
+			required: true,
+			unique: true,
+		},
 	},
 	{
 		timestamps: true,

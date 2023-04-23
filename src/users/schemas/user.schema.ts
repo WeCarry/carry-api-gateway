@@ -3,9 +3,9 @@ import { UserTypes } from '../enums/user-types.enum';
 import { Driver, driverSchema } from './driver.schema';
 import { Passenger, passengerSchema } from './passenger.schema';
 import { Merchant, merchantSchema } from './merchant.schema';
+import { BaseModel } from '../../common/types/base.model.type';
 
-export type User = {
-	_id: Types.ObjectId;
+export type User = BaseModel & {
 	email: string;
 	password: string;
 	firstName: string;
@@ -13,7 +13,6 @@ export type User = {
 	userType: UserTypes;
 	verified: boolean;
 	otp: number;
-	deletedAt: Date;
 	permissionFlags?: number;
 	additionalInfo: Driver | Passenger | Merchant | undefined;
 } & Document;
