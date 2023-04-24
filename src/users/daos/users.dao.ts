@@ -5,13 +5,16 @@ import debug from 'debug';
 import { CreateUserDto } from '../dto/create.user.dto';
 import UserModel, { User } from '../schemas/user.schema';
 import { Model } from 'mongoose';
+import { BaseDao } from '../../common/daos/base.dao';
+import { UserTypes } from '../enums/user-types.enum';
 
 const log: debug.IDebugger = debug('app:in-memory-dao');
 
-export class UsersDao {
+export class UsersDao extends BaseDao<User> {
 	private User: Model<User>;
 
 	constructor() {
+		super(UserModel);
 		log('Created new instance of UsersDao');
 		this.User = UserModel;
 	}
@@ -45,6 +48,42 @@ export class UsersDao {
 			return (
 				(await this.User.findOne({ _id: userId })
 					// .populate('User')
+					.select(select)
+					.exec()) ?? undefined
+			);
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	public async getDriverById(
+		driverId: string,
+		select: Record<string, number> = {}
+	): Promise<User | undefined> {
+		try {
+			return (
+				(await this.User.findOne({
+					_id: this.toId(driverId),
+					userType: UserTypes.Driver,
+				})
+					.select(select)
+					.exec()) ?? undefined
+			);
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	async getPassengerById(
+		driverId: string,
+		select: Record<string, number> = {}
+	): Promise<User | undefined> {
+		try {
+			return (
+				(await this.User.findOne({
+					_id: this.toId(driverId),
+					userType: UserTypes.Passenger,
+				})
 					.select(select)
 					.exec()) ?? undefined
 			);

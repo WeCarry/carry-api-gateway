@@ -1,7 +1,13 @@
-import { Document, Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { BaseModel } from '../../common/types/base.model.type';
 
-export type Ride = BaseModel & {
+export enum RideStatus {
+	Completed = 'COMPLETED',
+	InProgress = 'IN_PROGRESS',
+	NotStarted = 'NOT_STARTED',
+}
+
+export type BaseRide = {
 	driver: Schema.Types.ObjectId;
 	passenger: Schema.Types.ObjectId;
 	pickupLocation: {
@@ -18,7 +24,10 @@ export type Ride = BaseModel & {
 	distance: number;
 	duration: number;
 	rating: number;
+	status: RideStatus;
 };
+
+export type Ride = BaseRide & BaseModel;
 
 const rideSchema = new Schema<Ride>({
 	driver: {

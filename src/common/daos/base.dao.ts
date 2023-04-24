@@ -3,6 +3,7 @@ import {
 	FilterQuery,
 	Model,
 	QueryOptions,
+	Schema,
 	Types,
 	UpdateQuery,
 	UpdateWriteOpResult,
@@ -211,6 +212,14 @@ export class BaseDao<T> {
 	async aggregate(pipeline: any[], options?: AggregateOptions): Promise<T[]> {
 		try {
 			return await this.model.aggregate(pipeline, options).exec();
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	toId(id: string): Schema.Types.ObjectId {
+		try {
+			return new Schema.Types.ObjectId(id);
 		} catch (error) {
 			throw error;
 		}

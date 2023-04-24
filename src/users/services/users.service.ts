@@ -1,12 +1,11 @@
 import UsersDao from '../daos/users.dao';
-import { CRUD } from '../../common/interfaces/crud.interface';
 import { CreateUserDto } from '../dto/create.user.dto';
 import { PutUserDto } from '../dto/put.user.dto';
 import { PatchUserDto } from '../dto/patch.user.dto';
 import { User } from '../schemas/user.schema';
 import { Types } from 'mongoose';
 
-class UsersService implements CRUD<any> {
+class UsersService {
 	async create(resource: CreateUserDto): Promise<Types.ObjectId> {
 		return UsersDao.addUser(resource);
 	}

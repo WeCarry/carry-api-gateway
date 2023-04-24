@@ -45,6 +45,10 @@ type CardRemoveResponse = {
 	success: boolean;
 };
 
+type PaymentProcessed = {
+	success: boolean;
+};
+
 class PaymentService {
 	private readonly API_URL = process.env.API_URL!;
 	private readonly X_AUTH_TOKEN = process.env.X_AUTH_TOKEN!;
@@ -55,7 +59,7 @@ class PaymentService {
 		id: string
 	): Promise<CardCreateResponse> {
 		const requestData = {
-			id, // replace with your own unique ID
+			id,
 			method: 'cards.create',
 			params: {
 				card,
@@ -77,7 +81,7 @@ class PaymentService {
 		id: string
 	): Promise<GetVerifyCodeResponse> {
 		const requestData = {
-			id, // replace with your own unique ID
+			id,
 			method: 'cards.get_verify_code',
 			params: {
 				token,
@@ -99,7 +103,7 @@ class PaymentService {
 		id: string
 	): Promise<VerifyCardResponse> {
 		const requestData = {
-			id, // replace with your own unique ID
+			id,
 			method: 'cards.verify',
 			params: {
 				token,
@@ -117,7 +121,7 @@ class PaymentService {
 	}
 	async checkCard(token: string, id: string): Promise<CardCheckResult> {
 		const requestData = {
-			id, // replace with your own unique ID
+			id,
 			method: 'cards.check',
 			params: {
 				token,
@@ -135,7 +139,7 @@ class PaymentService {
 
 	async removeCard(token: string, id: string): Promise<CardRemoveResponse> {
 		const requestData = {
-			id, // replace with your own unique ID
+			id,
 			method: 'cards.remove',
 			params: {
 				token,
@@ -149,6 +153,13 @@ class PaymentService {
 		});
 
 		return response.data.result as CardRemoveResponse;
+	}
+
+	async processPayment(params: object): Promise<PaymentProcessed> {
+		const result = {
+			success: true,
+		};
+		return result;
 	}
 }
 
