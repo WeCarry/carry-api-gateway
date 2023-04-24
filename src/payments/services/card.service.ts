@@ -49,3 +49,5 @@ export class CardService implements ICardService {
 		return result.deletedCount === 1;
 	}
 }
+
+export default new CardService();

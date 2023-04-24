@@ -151,3 +151,5 @@ class PaymentService {
 		return response.data.result as CardRemoveResponse;
 	}
 }
+
+export default new PaymentService();
