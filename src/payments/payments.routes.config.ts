@@ -18,7 +18,7 @@ export class PaymentRoutes extends CommonRoutesConfig {
 			.post(paymentController.getVerifyCode)
 			.put(paymentController.verifyCard);
 
-		// this.app.route('/payments/remove').post(paymentController.removeCard);
+		this.app.route('/payments/remove').post(paymentController.removeCard);
 
 		return this.app;
 	}

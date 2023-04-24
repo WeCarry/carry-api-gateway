@@ -1,4 +1,4 @@
-import { Schema, Types } from 'mongoose';
+import { Types } from 'mongoose';
 import rideDao from '../daos/ride.dao';
 import { Ride, RideStatus } from '../schemas/ride.schema';
 import passengerService from './passenger.service';
