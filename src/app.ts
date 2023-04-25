@@ -1,7 +1,6 @@
 import express, { Application } from 'express';
 import * as http from 'http';
 import helmet from 'helmet';
-import { Server, Socket } from 'socket.io';
 
 import * as winston from 'winston';
 import * as expressWinston from 'express-winston';
@@ -13,6 +12,7 @@ dotenv.config();
 console.log('ENV:', process.env.ENV);
 import mongooseService from './common/services/mongoose.service';
 import { registerRoutes } from './common/config/routes.config';
+import setupSocket from './common/tools/socket/socket';
 
 const startServer = async () => {
 	try {
@@ -22,13 +22,15 @@ const startServer = async () => {
 		const app: Application = express();
 		app.use(helmet());
 		const server: http.Server = http.createServer(app);
-		const io = new Server(server);
 		const port = 3000;
 		const routes: Array<CommonRoutesConfig> = [];
 		const debugLog: debug.IDebugger = debug('app');
 
 		// here we are adding middleware to parse all incoming requests as JSON
 		app.use(express.json());
+
+		// create socket server.
+		const io = setupSocket(server);
 
 		// here we are adding middleware to allow cross-origin requests
 		app.use(cors());
@@ -79,20 +81,6 @@ const startServer = async () => {
 		console.error('Error starting the server:', error);
 		process.exit(1);
 	}
-};
-
-const handleSocketConnection = (socket: Socket) => {
-	console.log('Client connected:', socket.id);
-
-	// Listen for custom events from the client
-	socket.on('some-event', (data) => {
-		console.log('Received some-event:', data);
-	});
-
-	// Handle client disconnection
-	socket.on('disconnect', () => {
-		console.log('Client disconnected:', socket.id);
-	});
 };
 
 startServer();
