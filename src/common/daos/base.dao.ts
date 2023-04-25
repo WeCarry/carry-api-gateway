@@ -217,9 +217,9 @@ export class BaseDao<T> {
 		}
 	}
 
-	toId(id: string): Schema.Types.ObjectId {
+	toId(id: string): Types.ObjectId {
 		try {
-			return new Schema.Types.ObjectId(id);
+			return new Types.ObjectId(id);
 		} catch (error) {
 			throw error;
 		}

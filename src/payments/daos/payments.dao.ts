@@ -6,10 +6,7 @@ const log: debug.IDebugger = debug('app:in-memory-dao');
 
 class PaymentsDao extends BaseDao<Payment> {
 	constructor() {
-		log(
-			'Created new instance of ',
-			PaymentModel.prototype.constructor.name
-		);
+		log('Created new instance of ', PaymentsDao.prototype.constructor.name);
 		super(PaymentModel);
 	}
 }
