@@ -32,18 +32,21 @@ export type BasePayment = {
 
 export type Payment = BaseModel & BasePayment;
 
-const PaymentSchema = new Schema<Payment>({
-	amount: { type: Number, required: true },
-	currency: { type: Number, enum: Currency, required: true },
-	serviceFee: { type: Number, required: true },
-	tip: { type: Number },
-	date: { type: Date, required: true },
-	type: { type: String, enum: ['ride', 'delivery'], required: true },
-	userId: { type: Schema.Types.ObjectId, required: true },
-	driverId: { type: Types.ObjectId },
-	orderId: { type: Types.ObjectId },
-	deletedAt: { type: Date, select: false },
-});
+const PaymentSchema = new Schema<Payment>(
+	{
+		amount: { type: Number, required: true },
+		currency: { type: Number, enum: Currency, required: true },
+		serviceFee: { type: Number, required: true },
+		tip: { type: Number },
+		date: { type: Date, required: true },
+		type: { type: String, enum: ['ride', 'delivery'], required: true },
+		userId: { type: Schema.Types.ObjectId, required: true },
+		driverId: { type: Types.ObjectId },
+		orderId: { type: Types.ObjectId },
+		deletedAt: { type: Date, select: false },
+	},
+	{ timestamps: true }
+);
 
 const PaymentModel = model<Payment>('Payment', PaymentSchema);
 

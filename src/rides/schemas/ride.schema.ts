@@ -29,63 +29,66 @@ export type BaseRide = {
 
 export type Ride = BaseRide & BaseModel;
 
-const rideSchema = new Schema<Ride>({
-	driver: {
-		type: Schema.Types.ObjectId,
-		ref: 'Driver',
-		required: true,
-	},
-	passenger: {
-		type: Schema.Types.ObjectId,
-		ref: 'Passenger',
-		required: true,
-	},
-	pickupLocation: {
-		address: {
-			type: String,
+const rideSchema = new Schema<Ride>(
+	{
+		driver: {
+			type: Schema.Types.ObjectId,
+			ref: 'Driver',
 			required: true,
 		},
-		latitude: {
+		passenger: {
+			type: Schema.Types.ObjectId,
+			ref: 'Passenger',
+			required: true,
+		},
+		pickupLocation: {
+			address: {
+				type: String,
+				required: true,
+			},
+			latitude: {
+				type: Number,
+				required: true,
+			},
+			longitude: {
+				type: Number,
+				required: true,
+			},
+		},
+		dropoffLocation: {
+			address: {
+				type: String,
+				required: true,
+			},
+			latitude: {
+				type: Number,
+				required: true,
+			},
+			longitude: {
+				type: Number,
+				required: true,
+			},
+		},
+		fare: {
 			type: Number,
 			required: true,
 		},
-		longitude: {
+		distance: {
 			type: Number,
 			required: true,
 		},
-	},
-	dropoffLocation: {
-		address: {
-			type: String,
-			required: true,
-		},
-		latitude: {
+		duration: {
 			type: Number,
 			required: true,
 		},
-		longitude: {
+		rating: {
 			type: Number,
 			required: true,
+			min: 0,
+			max: 5,
 		},
 	},
-	fare: {
-		type: Number,
-		required: true,
-	},
-	distance: {
-		type: Number,
-		required: true,
-	},
-	duration: {
-		type: Number,
-		required: true,
-	},
-	rating: {
-		type: Number,
-		required: true,
-		min: 0,
-		max: 5,
-	},
-});
+	{ timestamps: true }
+);
 
 export const RideModel = model<Ride>('Ride', rideSchema);
