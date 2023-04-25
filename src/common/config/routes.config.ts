@@ -5,6 +5,7 @@ import { AuthRoutes } from '../../auth/auth.routes.config';
 import { PaymentRoutes } from '../../payments/payments.routes.config';
 import { NotificationRoutes } from '../../notificaitons/notifications.routes.config';
 import { RideRoutes } from '../../rides/rides.routes.config';
+import { ChatRoutes } from '../../chat/chat.routes.config';
 
 export function registerRoutes(
 	routes: Array<CommonRoutesConfig>,
@@ -15,4 +16,5 @@ export function registerRoutes(
 	routes.push(new PaymentRoutes(app));
 	routes.push(new NotificationRoutes(app));
 	routes.push(new RideRoutes(app));
+	routes.push(new ChatRoutes(app));
 }
