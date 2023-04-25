@@ -77,4 +77,4 @@ class RidesService {
 	}
 }
 
-export default RidesService;
+export default new RidesService();
