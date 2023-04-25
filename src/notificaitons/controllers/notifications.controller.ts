@@ -69,3 +69,5 @@ class NotificaionsController {
 		}
 	}
 }
+
+export default new NotificaionsController();
