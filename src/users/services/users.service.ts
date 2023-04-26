@@ -11,7 +11,7 @@ class UsersService {
 	async create(resource: CreateUserDto): Promise<Types.ObjectId> {
 		const otp = generateRandomCode();
 		Object.assign(resource, { otp });
-		const userId = UsersDao.addUser(resource);
+		const userId = await UsersDao.addUser(resource);
 		sendVerificationEmail(resource.email, '');
 		return userId;
 	}
