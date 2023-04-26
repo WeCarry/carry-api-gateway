@@ -4,10 +4,16 @@ import { PutUserDto } from '../dto/put.user.dto';
 import { PatchUserDto } from '../dto/patch.user.dto';
 import { User } from '../schemas/user.schema';
 import { Types } from 'mongoose';
+import { generateRandomCode } from '../utils/generate-random';
+import { sendVerificationEmail } from '../../common/notifications/email.notification';
 
 class UsersService {
 	async create(resource: CreateUserDto): Promise<Types.ObjectId> {
-		return UsersDao.addUser(resource);
+		const otp = generateRandomCode();
+		Object.assign(resource, { otp });
+		const userId = UsersDao.addUser(resource);
+		sendVerificationEmail(resource.email, '');
+		return userId;
 	}
 
 	async deleteById(
