@@ -1,9 +1,9 @@
-export class ErrorHandler extends Error {
+export class ErrorHandlerServer extends Error {
 	statusCode: number;
 
-	constructor(message: string, statusCode: number) {
+	constructor(message: string, statusCode: number = 0) {
 		super(message);
 		this.statusCode = statusCode;
-		Object.setPrototypeOf(this, ErrorHandler.prototype);
+		Object.setPrototypeOf(this, ErrorHandlerServer.prototype);
 	}
 }
